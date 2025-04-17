@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-a-app
+  labels:
+    app: client-a
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client-a
+  template:
+    metadata:
+      labels:
+        app: client-a
+    spec:
+      containers:
+      - name: client-a
+        image: gcr.io/prj-base-456911/gke-repo/client-a-app:${COMMIT_SHA} # Usar COMMIT_SHA como placeholder
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        cloud.google.com/gke-nodepool: client-a-pool
